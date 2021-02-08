@@ -1,0 +1,78 @@
+
+/*Notes style*/
+.notes-card {
+    border: 1px solid black;
+    width: 70%;
+    margin-left: 17%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    box-shadow: 0 2px 2px #ccc;
+    /* text-align: center; */
+    background-color: white;
+}
+
+.notes-card span {
+    display: inline-block; 
+    min-width: 17%; 
+    margin-right: 7px;
+}
+.notes-card button {
+    color: white;
+    border:none ;
+    background-color: black;
+    cursor: pointer;
+    height: 30px;
+    outline: none;
+    margin-right: 5px;
+}
+
+
+.notes-card button:hover{
+    background-color: grey;
+}
+
+.notes-card button:focus {
+    background-color: gray;
+    border: 1px solid black;
+}
+
+.background-color{
+    background-color: black;
+}
+
+.background-color span{
+    color: white;
+}
+
+.para-not-found {
+    text-align: center;
+    font-size: 2em;
+    font-weight: lighter;
+    margin-top: 300px;
+    color: gray;
+}
+
+.add-new-notes-rend {
+    display: flex;
+    justify-content: center;
+    padding-left: 5%;
+    padding-top: 10%;
+}
+
+.add-new-notes-rend label{
+    margin-right:20px ;
+}
+.add-new-notes-rend input{
+    border:1px solid black;
+}
+.add-new-notes-rend button{
+    width: 10%;
+    background-color: black;
+    color: white;
+    border:1px solid coral;
+    cursor: pointer;
+}
+
+
+

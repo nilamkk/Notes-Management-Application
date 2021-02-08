@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/CSS/signup.css">
+</head>
+<body>
+    
+    <header class="header-style">
+        <h1>Study Material Hub</h1>
+    </header>
+
+    <div class="signup-full-container">
+        
+        <div class="signup-box">
+            
+            <h3>SIGN UP</h3>
+            
+            <form action="/students/signup" method="POST">
+                <span>{{error}}</span>
+                <div class="signup-inner-group">
+                    <label>Name</label>
+                    <input type="text" name="name" placeholder="Full name" required>
+                </div>
+
+
+                <div class="signup-inner-group">
+                    <label>Email</label>
+                    <input type="text" name="email" placeholder="example@domain.com" required>
+                </div>
+                <div class="signup-inner-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="password" required>
+                </div>
+                <div class="signup-inner-group">
+                    <label>Scholar ID</label>
+                    <input type="text" name="scholar_no" placeholder="scolar id" required>
+                </div>
+                <div class="signup-inner-group">
+                    <label>Branch</label>
+                    <input type="text" name="branch" placeholder="branch" required>
+                </div>
+                <div class="signup-inner-group">
+                    <label>Section</label>
+                    <input type="text" name="section" placeholder="section" required>
+                </div>
+                <div class="signup-inner-group">
+                    <label>Semester</label>
+                    <input type="text" name="semester" placeholder="semester" required>
+                </div>
+                <button class="signup-button">Sign up</button>
+                <p class="para-OR">OR</p>
+                <a href="/login/student/page" class="login-btn">Log in</a>
+
+            </form>
+        </div>
+    </div>
+</body>
+</html>

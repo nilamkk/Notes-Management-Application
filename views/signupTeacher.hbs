@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/CSS/signup.css">
+    <title>Document</title>
+</head>
+<body>
+    <header class="header-style">
+        <h1>Study Material Hub</h1>
+    </header>
+    <div class="signup-full-container">
+        <div class="signup-box" style="height: 70%;">
+            <h3>SIGN UP</h3>
+            <form action="/teachers/signup" method="POST">
+                <span>{{error}}</span>
+                <div class="signup-inner-group">
+                    <label>Name</label>
+                    <input type="text" name="name" placeholder="Full name" required>
+                </div>
+                <div class="signup-inner-group">
+                    <label>Email</label>
+                    <input type="text" name="email" placeholder="example@domain.com" required>
+                </div>
+                <div class="signup-inner-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="password" required>
+                </div>
+                <div class="signup-inner-group">
+                    <label>Department</label>
+                    <input type="text" name="department" placeholder="department" required>
+                </div>
+                <button class="signup-button">Submit</button>
+                <p class="para-OR">OR</p>
+                <a href="/login/teacher/page" class="login-btn">Log in</a>
+
+            </form>
+        </div>
+    </div>
+</body>
+</html>

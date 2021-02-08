@@ -1,0 +1,187 @@
+* {
+    box-sizing: border-box;
+}
+html,body {
+    margin:0;
+}
+.header-style {
+    height: 100px;
+    background-color: hsl(0,0%,0%,0.9);
+}
+.header-style h1 {
+    text-align: center;
+    color: white;
+    margin: 0;
+    padding-top: 10px;
+}
+
+.links-to-surf{
+    height: 70px;
+    background-color:tomato ;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    text-align: center;
+}
+.links-to-surf ul{
+    margin: 0;
+}
+.links-to-surf button {
+    font-weight: lighter;
+    font-size: 1em;
+    padding: 1.1em;
+    margin-top: 10px;
+    margin-right: 3em;
+    background-color: tomato;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+.links-to-surf button:hover {
+    border: 1px solid white;
+}
+.links-to-surf li{
+    display: inline;
+}
+
+
+.signup-full-container {
+    background-color: tomato;
+    margin: 0;
+    height: 100vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.signup-box {
+    background-color: white;
+    border-radius: 5px;
+    height: 97%;
+    width: 40%;
+    font-weight: lighter;
+}
+.login-box {
+    background-color: white;
+    border-radius: 5px;
+    height: 55%;
+    width: 40%;
+    font-weight: lighter;
+}
+.login-box span {
+    display: block;
+    background-color: gray;
+    text-align: center;
+    color: brown;
+}
+.signup-box span {
+    display: block;
+    background-color: gray;
+    text-align: center;
+    color: brown;
+}
+
+.signup-box h3,.login-box h3 {
+    text-align: center;
+    font-size: 2.5em;
+    font-weight: normal;
+}
+
+.signup-inner-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    width: 80%;
+}
+.signup-inner-group label {
+    margin-left: 23%;
+    margin-bottom: 3px ;
+}
+.signup-inner-group input {
+    margin-left: 23%;
+    height: 32px;
+    border:1px solid coral;
+}
+input:focus {
+    border: 1px solid #1670BE;
+    box-shadow: 0 0 2px #44bdf5;
+    outline-offset: 0px;
+    outline: none;
+}
+.signup-button {
+    width: 20%;
+    height: 40px;
+    margin-left: 40%;
+    border:1px solid coral;
+    color: black;
+    background-color: white;
+    cursor: pointer;
+}
+.signup-button:hover {
+    border-color: blue;
+}
+.para-OR {
+    text-align: center;
+    padding: 0px;
+    height: 10px;
+}
+.login-btn {
+    display: inline-block;
+    text-decoration: none;
+    width: 20%;
+    height: 40px;
+    margin-left: 40%;
+    border:1px solid coral;
+    color: black;
+    text-align: center;
+    padding-top: 10px;
+}
+.login-btn:hover {
+    border-color: blue;
+}
+
+.all-notes-list {
+    height: 100vh;
+    background-color: white;
+}
+
+
+.profile-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid tomato;
+    max-width: 60%;
+    height: 300px;
+    margin-top: 30px;
+    margin-left: 30px;
+    
+}
+
+.profile-box-inner {
+    width: 80%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.profile-box-inner label {
+    display: inline-block;
+    min-width:20% ;
+    padding-left: 10%;
+    font-size: 1.1em;
+    font-weight: lighter;
+}
+.profile-box-inner span {
+    margin-left: 20%;
+    font-size: 1.1em;
+    font-weight: lighter;
+}
+
+
+
+
+
+
+
+
+
+
+
