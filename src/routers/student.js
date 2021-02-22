@@ -15,7 +15,6 @@ router.get('/student/home',(req,res)=>{
     res.render('student_home.hbs')
 })
 
-
 //  Student signup  -----verifiedd
 router.post('/students/signup', async (req, res) => {
     
@@ -49,7 +48,7 @@ router.post('/students/login', async (req, res) => {
         res
             .status(200)
             .cookie("auth_token",token)
-            .redirect('/student/home')
+            .redirect('/studentNotes')
     } catch (e) {
         res.status(400).render("loginStudent.hbs",{
             error:"Invalid Password or Email."
@@ -59,14 +58,14 @@ router.post('/students/login', async (req, res) => {
 
 
 // logout       --verified                                                                          left to do
-router.post('/students/logout', auth, async (req, res) => {                                         
+router.get('/students/logout', auth, async (req, res) => {                                         
     try {
         req.student.tokens = req.student.tokens.filter((token) => {
             return token.token !== req.token
         })
         await req.student.save()
         // console.log("DONE")
-        res.send()//////////////"Pragma", "no-cache"//"Cache-Control","no-cache, no-store, must-revalidate"
+        res.redirect('/manageNotes/home')//////////////"Pragma", "no-cache"//"Cache-Control","no-cache, no-store, must-revalidate"
     } catch (e) {
         res.status(500).send()
     }

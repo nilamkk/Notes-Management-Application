@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All notes</title>
+    <link rel="stylesheet" href="/CSS/signup.css">
+    <link rel="stylesheet" href="/CSS/renderEl.css">
+</head>
+    <body>
+        {{>mainHeader}}
+        {{>navElements}}
+
+        {{>filterElements}}
+
+        {{>notesListheader}}
+
+        
+        {{#each notes}}
+            <div class="notes-card">
+                <span>{{this.name}}</span>
+                <span>{{this.semester}}</span>
+                <span>{{this.subject}}</span>
+                <span>{{this.time}}</span>
+                <span>{{this.teacherName}}</span>
+                <a href="/notes/{{this.notesId}}" title="notes download" target="_blank">Download</a>
+            </div>        
+        {{/each}}
+
+        {{>pageNumbers}}
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="/clientJS/notes/allNotesPage.js"></script>
+    </body>
+</html>
+

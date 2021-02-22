@@ -1,30 +1,41 @@
-<!DOCTYPE html>
+{{!-- <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/CSS/signup.css">
+        {{!-- <link rel="stylesheet" href="../public/CSS/signup.css"> --}}
         <link rel="stylesheet" href="/CSS/renderEl.css">
-        <title>Document</title>
+        {{!-- <link rel="stylesheet" href="../public/CSS/renderEl.css"> This cant be used :/ --}}
+        <title>Student Home</title>
     </head>
     <body>
-        <header class="header-style">
+        {{!-- <header class="header-style">
             <h1>Study Material Hub</h1>
-        </header>
+        </header> --}}
+        {{>mainHeader}}
         <section class="section-body">
-            <div class="links-to-surf">
+            {{!-- <div class="links-to-surf">
                 <ul>
                     <li><button class="links-to-surf-profile" >My Profile</button></li>
                     <li><button class="links-to-surf-logout">Log out</button></li>
                     <li><button  class="get-all-notes">All Notes</button></li>
                     <li><button class="get-my-notes-again">My Notes</button></li>                
                 </ul>
-            </div>
-
-            <div class="all-notes-list">
-
-            </div>
-
+            </div> --}}
+            {{>navElements}}
+            {{>notesListheader}}
+            
+            {{#each notes}}
+                <div class="notes-card">
+                    <span>{{this.name}}</span>
+                    <span>{{this.semester}}</span>
+                    <span>{{this.subject}}</span>
+                    <span>{{this.time}}</span>
+                    <span>{{this.teacherName}}</span>
+                    <button onclick="downloadMaterial(this,'{{this.notesId}}')" >Download</button>
+                </div>        
+            {{/each}}
         </section>
         
 
@@ -50,4 +61,4 @@
         <script src="/clientJS/student/studentFunc.js" ></script>
         <script src="/clientJS/student/studentMain.js" ></script>
     </body>
-</html>
+</html> --}}

@@ -63,7 +63,6 @@ const studentSchema=new mongoose.Schema({           ///// Sanitization left
             if(exist===-1){
                 throw new Error('Invalid Branch!')
             }
-            
         }
     },
     section:{               

@@ -1,0 +1,11 @@
+    <div class="page-numbers-container">
+        {{#each reqRange}}
+            <span class="page-numbers" onclick="changePageFun(this)">{{this}}</span> <br>
+        {{/each}}
+        <hr>
+        <p id="current-page"></p>
+    </div>
+
+    <script type="text/html" id="sort-by-script">
+        {{sortBy.criteria}}_{{sortBy.mode}}_{{activatePage}}
+    </script>

@@ -10,7 +10,33 @@ const auth =require('../middleware/auth')
 
 // teacher home
 router.get('/teacher/home',(req,res)=>{
-    res.render('teacherHome.hbs')
+    
+    
+////DISCARD IT
+    
+    
+    res.render('studentNotes.hbs',{
+        notes:[],
+        isTeacher:true
+    })
+})
+
+// login    
+router.post('/teachers/login', async (req, res) => {
+    try {
+        const teacher = await Teacher.findByCredentials(req.body.email, req.body.password)
+        // console.log("r-1")
+        const token = await teacher.generateAuthToken()
+        // console.log("r-2")          
+        res
+            .status(201)
+            .cookie("auth_token",token)
+            .redirect('/teacherNotes')
+    } catch (e) {
+        res.status(400).render('loginTeacher.hbs',{
+            error:"Invalid Password or Email."
+        })
+    }
 })
 
 // send teacher by id
@@ -24,7 +50,6 @@ router.get('/findTeacher/:id',async(req,res)=>{
     }
     
 })
-
 
 //  Teacher signup  
 router.post('/teachers/signup', async (req, res) => {
@@ -50,33 +75,14 @@ router.post('/teachers/signup', async (req, res) => {
     }
 })
 
-// login    
-router.post('/teachers/login', async (req, res) => {
-    try {
-        const teacher = await Teacher.findByCredentials(req.body.email, req.body.password)
-        // console.log("r-1")
-        const token = await teacher.generateAuthToken()
-        // console.log("r-2")          
-        res
-            .status(201)
-            .cookie("auth_token",token)
-            .redirect('/teacher/home')
-    } catch (e) {
-        res.status(400).render('loginTeacher.hbs',{
-            error:"Invalid Password or Email."
-        })
-    }
-})
-
 // logout      
-router.post('/teachers/logout', auth , async (req, res) => {
+router.get('/teachers/logout', auth , async (req, res) => {
     try {
         req.teacher.tokens = req.teacher.tokens.filter((token) => {
             return token.token !== req.token
         })
         await req.teacher.save()
-
-        res.send()
+        res.redirect('/manageNotes/home')
     } catch (e) {
         res.status(500).send()
     }
@@ -105,7 +111,6 @@ router.patch('/teachers/me', auth, async (req, res) => {
         res.status(400).send(e)
     }
 })
-
 
 // delete account           -------verified
 router.delete('/teachers/me', auth, async (req, res) => {

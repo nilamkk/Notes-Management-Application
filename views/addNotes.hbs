@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/CSS/addNotes.css">
+    <link rel="stylesheet" href="/CSS/signup.css">
+</head>
+<body>
+    {{>mainHeader}}
+    {{>navElements}}
+    <div class="form-container-file">
+        <form id="notes-input-form" action="/addNotes" method="POST" enctype="multipart/form-data">
+            <div class="input-div">
+                <p>Name:</p>
+                <input type="text" placeholder="enter name of the notes" name="name" >
+            </div>
+            <div class="input-div">
+                <p>Subject:</p>
+                <input type="text" placeholder="enter subject" name="subject" >
+            </div>
+            <div class="input-div">
+                <p>Branch:</p>
+                <input type="text" placeholder="enter branch" name="branch" >
+            </div>
+            <div class="input-div">
+                <p>Semester:</p>
+                <input type="number" placeholder="enter semester" name="semester" >
+            </div>
+            <div class="input-div ">
+                <p>File:</p>
+                <input type="file" name="newNotes" accept=".pdf,.ppt,.docx,.doc,.pptx,.txt, .xlsx ,.jpg , .png" >
+            </div>
+            <div class="input-div ">
+                <input type="submit" value="Add">
+            </div>
+        </form>
+    </div>
+    
+    <script src="/clientJS/teacher/addNotes.js"></script>
+</body>
+</html>

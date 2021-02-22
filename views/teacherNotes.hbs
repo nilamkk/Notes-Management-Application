@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/CSS/signup.css">
+        <link rel="stylesheet" href="/CSS/renderEl.css">
+        <title>Student Home</title>
+    </head>
+    <body>
+        {{>mainHeader}}
+        {{>navElements}}
+
+        {{>filterElements}}
+
+        {{>notesListheader}}
+
+        {{#each notes}}
+            <div class="notes-card">
+                <span>{{this.name}}</span>
+                <span>{{this.semester}}</span>
+                <span>{{this.subject}}</span>
+                <span>{{this.time}}</span>
+                <span>{{this.teacherName}}</span>
+                <a href="/notes/{{this.notesId}}" title="notes download" target="_blank">Download</a>
+                <button onclick="deleteHandler(this,'{{this.notesId}}')" >Delete</button>
+            </div>        
+        {{/each}}
+
+        {{>pageNumbers}}
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            const deleteHandler=async (e,notesId)=>{
+                e.setAttribute('disabled','disabled')
+                try{
+                    const res=await axios({
+                        url:`/notes/${notesId}`,
+                        method:'delete',
+                    })
+                    console.log(res)
+                    e.removeAttribute('disabled')
+                    location.assign('/teacherNotes')
+                }catch(err){
+                    e.removeAttribute('disabled')
+                    console.log(err)
+                }
+            }
+        </script>
+    </body>
+</html>

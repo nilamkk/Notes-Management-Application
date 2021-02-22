@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/CSS/signup.css">
+        {{!-- <link rel="stylesheet" href="../public/CSS/signup.css"> --}}
+        <link rel="stylesheet" href="/CSS/renderEl.css">
+        <title>Student Home</title>
+    </head>
+    <body>
+        {{>mainHeader}}
+        {{>navElements}}
+        {{>notesListheader}}
+        {{#each notes}}
+            <div class="notes-card">
+                <span>{{this.name}}</span>
+                <span>{{this.semester}}</span>
+                <span>{{this.subject}}</span>
+                <span>{{this.time}}</span>
+                <span>{{this.teacherName}}</span>
+                <a href="/notes/{{this.notesId}}" title="notes download" target="_blank">Download</a>
+            </div>        
+        {{/each}}
+<!--                                                                                        I WILL ADD THIS BUT LATER.
+        <div class="filter-notes">
+                <div class="filter-notes-inner">
+                    <label>Name</label>
+                    <input type="text" name="name" placeholder="Name of the notes" >
+                </div>
+                <div class="filter-notes-inner">
+                    <label>Subject</label>
+                    <input type="text" name="subject" placeholder="subject" >
+                </div>
+                <div class="filter-notes-inner">
+                    <label>Semester</label>
+                    <input type="text" name="semester" placeholder="semester" >
+                </div>
+        </div>
+-->
+    </body>
+</html>

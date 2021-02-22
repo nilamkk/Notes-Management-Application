@@ -6,6 +6,12 @@ const noteSchema= new mongoose.Schema({
     name:{
         type:String,
         required:true,
+        trim:true,
+        lowercase:true
+    },
+    fileName:{
+        type:String,
+        required:true,
         trim:true
     },
     subject:{
@@ -23,6 +29,11 @@ const noteSchema= new mongoose.Schema({
             }  
         }
     },
+    branch:{
+        type:String,
+        required:true,
+        trim:true
+    },
     uploaded_by:{
         type: mongoose.Schema.Types.ObjectID,
         required:true,
@@ -33,7 +44,6 @@ const noteSchema= new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:'Notes'
         }
-        
     }],
     mainFile:{
         type:Buffer
