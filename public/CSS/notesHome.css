@@ -2,11 +2,9 @@
     box-sizing: border-box;
     color:#777;
 }
-
 html,body {
     margin:0;
 }
-
 .main-container {
     background-color: tomato;
     height: 100vh;
@@ -15,7 +13,6 @@ html,body {
     justify-content: center;
     align-items: center;
 }
-
 .content-container {
     background-color: white;
     height: 50%;
@@ -24,9 +21,9 @@ html,body {
     max-width: 400px;
     padding: 50px 40px;
     box-shadow: 1px 1px #8f1818;
+    border-radius: 5px;
 
 }
-
 .header-text {
     color: black;
     text-align: center;
@@ -38,7 +35,6 @@ html,body {
 .inner-text {
     margin-bottom: 20px;
 }
-
 .inner-text label {
     color:black;
     font-weight: lighter;
@@ -55,9 +51,6 @@ html,body {
     font-weight: lighter;
     cursor: pointer;
 }
-
-
-
 .main-button {
     padding: 10px 30px;
     width: 100%;

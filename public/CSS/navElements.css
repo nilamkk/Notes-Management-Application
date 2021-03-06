@@ -1,0 +1,14 @@
+.links-to-surf a {
+    text-decoration: none;
+    color: white;
+    padding: 1em;
+}
+
+.links-to-surf a:hover{
+    color: #ccc;
+}
+
+
+.links-to-surf a:active{
+    color: #ccc;   
+}

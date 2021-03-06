@@ -7,20 +7,10 @@ const router = new express.Router()
 
 // Middelwares
 const auth =require('../middleware/auth')
+const { count } = require('../models/teacher')
 
-// teacher home
-router.get('/teacher/home',(req,res)=>{
-    
-    
-////DISCARD IT
-    
-    
-    res.render('studentNotes.hbs',{
-        notes:[],
-        isTeacher:true
-    })
-})
-
+// // teacher home
+// router.get('/teacher/home',(req,res)=>{
 // login    
 router.post('/teachers/login', async (req, res) => {
     try {
@@ -53,25 +43,30 @@ router.get('/findTeacher/:id',async(req,res)=>{
 
 //  Teacher signup  
 router.post('/teachers/signup', async (req, res) => {
-    
-
+    console.log("DONE")
     try {
+        req.body.name=req.body.name.charAt(0).toUpperCase()+req.body.name.slice(1)
+        console.log(req.body.name)
+        console.log(1)
         const teacher = new Teacher(req.body)
+        console.log(teacher)
         await teacher.save()
-        // console.log(111111)
+        console.log(2)
         const token = await teacher.generateAuthToken()
-        // console.log(token)                          
+        // console.log(token)
+        console.log(3)
         res
             .status(201)
             .cookie("auth_token",token)
             .redirect('/teacher/home')
     } catch (e) {                                   // e.errors.email.message
-        const errorElements=Object.keys(e.errors)
-        const oneEl=errorElements[0]
+        // const errorElements=Object.keys(e.errors)
+        // const oneEl=errorElements[0]
         
-        res.status(400).render('signupTeacher.hbs',{
-            error:`${oneEl} is invalid`
-        })
+        // res.status(400).render('signupTeacher.hbs',{
+        //     error:`${oneEl} is invalid`
+        // })
+        res.send("ERROR")
     }
 })
 
@@ -90,7 +85,15 @@ router.get('/teachers/logout', auth , async (req, res) => {
 
 //get account       
 router.get('/teachers/me', auth, async (req, res) => {
-    res.send(req.teacher)
+    
+    const teacherInfo={
+        name:req.teacher.name,
+        department:req.teacher.department,
+        email:req.teacher.email,
+        isTeacher:true
+    }
+    
+    res.render('profileTeacher.hbs',teacherInfo)
 })
 
 // update 

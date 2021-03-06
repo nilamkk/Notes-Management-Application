@@ -94,6 +94,12 @@ studentSchema.virtual('studentNotes', {
     localField: '_id',
     foreignField: 'downloaded_by.student'
 })
+studentSchema.virtual('studentNotesCount', {
+    ref: 'Notes',
+    localField: '_id',
+    foreignField: 'downloaded_by.student',
+    count:true
+})
 
 studentSchema.methods.generateAuthToken = async function () {
     const student = this

@@ -74,11 +74,14 @@ const createQueryString=()=>{
     let queryString=`?`
 
     if(filterSubject.value){
-        if(filterSubject.value!=="All")
-            queryString+=`subject=${filterSubject.value}&`
+        if(filterSubject.value!=="All"){
+            let subjectName=filterSubject.value
+            queryString+=`subject=${subjectName}&`
+        }
     }else if(filterSubjectSpan.textContent){
         if(filterSubjectSpan.textContent!=="All"){
-            queryString+=`subject=${filterSubjectSpan.textContent}&`  
+            let subjectName=filterSubject.value
+            queryString+=`subject=${subjectName}&`  
         }
     }
     if(filterBranch.value){

@@ -3,8 +3,85 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/CSS/signup.css">
         <title>Document</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            html,body {
+                margin:0;
+                height: 100%;
+            }
+            .header-style {
+                height: 100px;
+                background-color: hsl(0,0%,0%,0.9);
+            }
+            .header-style h1 {
+                text-align: center;
+                color: white;
+                margin: 0;
+                padding-top: 10px;
+            }
+            .signup-full-container{
+                height: 100%;
+                background-color: tomato;
+                padding: 20px;
+            }
+            .login-box{
+                background-color: white;
+                width: 25%;
+                margin: auto;
+                border-radius: 5px;
+                padding: 1em;
+            }
+            .login-box h3{
+                text-align: center;
+            }
+            
+            .signup-inner-group input {
+                height: 32px;
+                width: 100%;
+                border:1px solid coral;
+            }
+            input:focus {
+                border: 1px solid #1670BE;
+                box-shadow: 0 0 2px #44bdf5;
+                outline-offset: 0px;
+                outline: none;
+            }
+            .signup-btn {
+                width: 100%;
+                margin: 8px;
+                margin-bottom: 10px;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 5px;
+                border:1px solid coral;
+                text-align: center;
+            }
+            .signup-btn:hover {
+                background-color: rgb(240, 43, 9);
+                color: white;
+                cursor: pointer;
+            }
+            .login-btn {
+                width: 100%;
+                height: 30px;
+                border:1px solid coral;
+                color: black;
+                background-color: white;
+                cursor: pointer;
+            }
+            .login-btn:hover {
+                color: white;
+                background-color: rgb(240, 43, 9);
+                cursor: pointer;
+            }
+            .para-OR{
+                text-align: center;
+                margin: 8px;
+            }
+        </style>
     </head>
     <body>
         <header class="header-style">
@@ -14,21 +91,30 @@
             <div class="login-box">
                 <h3>LOG IN</h3>
                 <form action="/students/login" method="POST">
-
                     <span>{{error}}</span>
-                    <div class="signup-inner-group">
+
+                    <p class="signup-inner-group">
                         <label>Email</label>
                         <input type="text" name="email" placeholder="example@domain.com" required>
-                    </div>
-                    <div class="signup-inner-group">
-                        <label>Password</label>
+                    </p>
+                    
+                    <p class="signup-inner-group">
+                        <label>Password  </label>
                         <input type="password" name="password" placeholder="password" required>
-                    </div>
-                    <button class="signup-button">Log in</button>
+                    </p>
+
+                    <button class="login-btn">Log in</button>
                     <p class="para-OR">OR</p>
-                    <a href="/signup/student/page" class="login-btn">Sign up</a>
+                    <p class="signup-btn">Sign up</p>    
                 </form>
             </div>
         </div>
+
+        <script>
+            document.querySelector('.signup-btn').addEventListener('click',()=>{
+                location.assign('/signup/student/page')
+            })
+        </script>
+
     </body>
 </html>

@@ -14,16 +14,18 @@ html,body {
     margin: 0;
     padding-top: 10px;
 }
-
 .links-to-surf{
     height: 70px;
     background-color:tomato ;
     border-top: 1px solid white;
     border-bottom: 1px solid white;
     text-align: center;
+    padding: 10px;
 }
 .links-to-surf ul{
     margin: 0;
+    padding: 10px;
+    
 }
 .links-to-surf button {
     font-weight: lighter;
@@ -46,18 +48,17 @@ html,body {
 
 .signup-full-container {
     background-color: tomato;
-    margin: 0;
-    height: 100vh;
-    display:flex;
-    justify-content: center;
-    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .signup-box {
     background-color: white;
     border-radius: 5px;
-    height: 97%;
-    width: 40%;
+    width: 50%;
     font-weight: lighter;
+    padding: 20px;
+    margin: auto;
+    margin-bottom: 10px;
 }
 .login-box {
     background-color: white;
@@ -124,15 +125,18 @@ input:focus {
     height: 10px;
 }
 .login-btn {
-    display: inline-block;
-    text-decoration: none;
     width: 20%;
-    height: 40px;
-    margin-left: 40%;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
     border:1px solid coral;
     color: black;
     text-align: center;
-    padding-top: 10px;
+}
+.login-btn a{
+    text-decoration: none;
+
 }
 .login-btn:hover {
     border-color: blue;

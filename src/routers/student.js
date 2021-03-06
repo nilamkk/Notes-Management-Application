@@ -5,20 +5,14 @@ const Student=require('../models/student')
 const express=require('express')
 const router = new express.Router()
 
-
 // Middelwares
 const  auth =require('../middleware/auth')
 
 
-// student home page
-router.get('/student/home',(req,res)=>{
-    res.render('student_home.hbs')
-})
-
 //  Student signup  -----verifiedd
 router.post('/students/signup', async (req, res) => {
     
-    // console.log(req.body)
+    req.body.name=req.body.name.charAt(0).toUpperCase()+req.body.name.slice(1)
     const student = new Student(req.body)
 
     try {
@@ -27,7 +21,7 @@ router.post('/students/signup', async (req, res) => {
         res
             .status(201)
             .cookie("auth_token",token)
-            .redirect('/student/home')           /// httponly .............
+            .redirect('/studentNotes')           /// httponly .............
         
     } catch (e) {
         const errorElements=Object.keys(e.errors)
@@ -37,7 +31,7 @@ router.post('/students/signup', async (req, res) => {
             error:`${oneEl} is invalid`
         })
     }
-})          ////////here i am
+})
 
 // login----------verified
 router.post('/students/login', async (req, res) => {
@@ -56,7 +50,6 @@ router.post('/students/login', async (req, res) => {
     }
 })
 
-
 // logout       --verified                                                                          left to do
 router.get('/students/logout', auth, async (req, res) => {                                         
     try {
@@ -65,7 +58,7 @@ router.get('/students/logout', auth, async (req, res) => {
         })
         await req.student.save()
         // console.log("DONE")
-        res.redirect('/manageNotes/home')//////////////"Pragma", "no-cache"//"Cache-Control","no-cache, no-store, must-revalidate"
+        res.redirect('/manageNotes/home')
     } catch (e) {
         res.status(500).send()
     }
@@ -73,7 +66,16 @@ router.get('/students/logout', auth, async (req, res) => {
 
 //get account-------verified                                                                        
 router.get('/students/me', auth, async (req, res) => {
-    res.send(req.student)
+    // res.send(req.student)
+
+    const studentInfo={
+        name:req.student.name,
+        section:req.student.section,
+        branch:req.student.branch,
+        semester:req.student.semester,
+        email:req.student.email
+    }
+    res.render('profileStudent.hbs',studentInfo)
 })
 
 // update                                                                                                   letf
@@ -94,8 +96,6 @@ router.patch('/students/me', auth, async (req, res) => {
         res.status(400).send(e)
     }
 })
-
-
 // delete account       -------------verified                                                           left
 router.delete('/students/me', auth, async (req, res) => {
     try {

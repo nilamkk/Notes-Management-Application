@@ -64,6 +64,12 @@ teacherSchema.virtual('teacherNotes', {
     localField: '_id',
     foreignField: 'uploaded_by'
 })
+teacherSchema.virtual('teacherNotesCount', {
+    ref: 'Notes',
+    localField: '_id',
+    foreignField: 'uploaded_by',
+    count:true
+})
 
 teacherSchema.methods.generateAuthToken = async function () {
     const teacher = this
@@ -113,9 +119,6 @@ teacherSchema.pre('save', async function (next) {
 
     next()
 })
-
-
-
 
 
 const Teacher=mongoose.model('Teacher',teacherSchema)

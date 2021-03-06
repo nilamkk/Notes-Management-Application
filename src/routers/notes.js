@@ -35,7 +35,7 @@ router.get('/notes/:id',auth,  async (req, res) => {
         res.status(500).send()
     }
 })
-// delete notes for teachers    ---- verified                                                                       left to do
+// delete notes for teachers    ---- verified                                                                       
 router.delete('/notes/:id', auth, async (req, res) => {
     try {
         const notes = await Notes.findOneAndDelete({ _id: req.params.id, uploaded_by: req.teacher._id })
@@ -47,97 +47,13 @@ router.delete('/notes/:id', auth, async (req, res) => {
         res.status(500).send()
     }
 })
-
 // By students and teachers
 // get notes with limit and sorting------DONE
-router.get('/teacherNotes', auth, async (req, res) => {             
+router.get('/teacherNotes',auth,async (req,res)=>{
 
-    const sort = {}
-    sort['createdAt']=-1
-    if (req.query.sortBy) {
-        const parts = req.query.sortBy.split(':')
-        sort[parts[0]] = parts[1] === 'desc' ? -1 : 1
+    if(req.query.subject){
+        req.query.subject=req.query.subject.split("-").join(" ")
     }
-    try {
-        console.log(1)
-        await req.teacher.populate({      
-            path: 'teacherNotes',
-            select:'name subject semester uploaded_by createdAt updatedAt',
-            options: {
-                limit: parseInt(req.query.limit),
-                skip: parseInt(req.query.skip),
-                sort
-            }
-        }).execPopulate()
-
-        const notesToSend=[]        // notesToSend-> array of object {}
-        // better you populate later
-
-        req.teacher.teacherNotes.forEach( async (oneNote)=>{
-            // const teacher=await Teacher.findById({_id:oneNote.uploaded_by},'name')
-            notesToSend.push({
-                name:oneNote.name,
-                semester:oneNote.semester,
-                subject:oneNote.subject,
-                time:moment(oneNote.createdAt).format('DD:MM:YYYY'),    
-                teacherName:req.teacher.name,
-                notesId:oneNote._id
-            })
-        })
-
-        res.render('teacherNotes.hbs',{
-            notes:notesToSend,
-            isTeacher:true
-        })
-        // res.send(req.teacher.teacherNotes)    
-    } catch (e) {
-        res.status(500).send()
-    }
-})
-router.get('/studentNotes', auth, async (req, res) => {             
-    const sort = {}
-    sort['createdAt']=-1
-    if (req.query.sortBy) {
-        const parts = req.query.sortBy.split(':')
-        sort[parts[0]] = parts[1] === 'desc' ? -1 : 1
-    }
-
-    try {
-        await req.student.populate({       
-            path: "studentNotes",
-            select:'name subject semester uploaded_by createdAt updatedAt',               ////// dont know why including downloaded by
-            options: {
-                limit: parseInt(req.query.limit),
-                skip: parseInt(req.query.skip),
-                sort
-            }
-        }).execPopulate()
-        // send students home page
-        const notesToSend=[]        // notesToSend-> array of object {}
-        // better you populate later
-
-        req.student.studentNotes.forEach( async (oneNote)=>{
-            const teacher=await Teacher.findById({_id:oneNote.uploaded_by},'name')
-            notesToSend.push({
-                name:oneNote.name,
-                semester:oneNote.semester,
-                subject:oneNote.subject,
-                time:moment(oneNote.createdAt).format('DD:MM:YYYY'),    
-                teacherName:teacher.name,
-                notesId:oneNote._id
-            })
-        })
-
-        res.render('studentNotes.hbs',{
-            notes:notesToSend,
-            isTeacher:false
-        })
-    } catch (e) {
-        res.status(500).send(e)
-    }
-})
-// new get all notes logic
-router.get('/allNotesPage',auth,async (req,res)=>{
 
     const queryForNotes={}
     for( let i in req.query){
@@ -147,6 +63,289 @@ router.get('/allNotesPage',auth,async (req,res)=>{
         queryForNotes[i]=req.query[i]
     }
     if(!req.query.skip){        //////////--------
+        req.query.skip="1"
+    }
+    if(!req.query.range){
+        req.query.range="1to5"
+    }
+    try{
+        await req.teacher.populate({
+            path:'teacherNotesCount',
+            match:queryForNotes
+        }).execPopulate()
+        const totalNumberOfNotes=req.teacher.teacherNotesCount
+        const totalNumberOfPages=Math.ceil(totalNumberOfNotes/3)
+        const reqRangeDemo=[parseInt(req.query.range.split('to')[0]), parseInt(req.query.range.split('to')[1]) ]
+        const reqRange=[]
+        for(let i=reqRangeDemo[0];i<=reqRangeDemo[1];i++){
+            reqRange.push(i)
+            if(i>=totalNumberOfPages)
+                break;
+        }
+
+        await req.teacher.populate({      
+                path: 'teacherNotes',
+                select:'name subject semester uploaded_by createdAt updatedAt',
+                match:queryForNotes,
+                options: {
+                    limit:3,  
+                    skip:(parseInt(req.query.skip)-1)*3,
+                    sort:{
+                        createdAt:-1    // to extract information by sorting
+                    }
+                }
+            }).execPopulate()
+        if(!req.teacher.teacherNotes){
+            return res.status(404).send()
+        }
+
+        const query={}
+        if(req.query.semester){
+            query.semester=req.query.semester
+        }
+        if(req.query.branch){
+            query.branch=req.query.branch
+        }
+
+        const allSubjects=await Notes.find(query,'subject') 
+
+        
+        const notesToSend=[]       
+        const filterSubjects=[]      
+
+        allSubjects.forEach((item)=>{
+            if(!filterSubjects.includes(item.subject)){
+                filterSubjects.push(item.subject.split(" ").join("-"))//////s
+            }
+        })
+
+        for(let i=0;i<req.teacher.teacherNotes.length;i++){
+            let oneNote=req.teacher.teacherNotes[i]
+            notesToSend.push({
+                name:oneNote.name,
+                semester:oneNote.semester,
+                subject:oneNote.subject,
+                time:moment(oneNote.createdAt).format('DD:MM:YYYY'),    
+                teacherName:req.teacher.name,
+                notesId:oneNote._id
+            })
+        }
+
+        if(!req.query.subject){
+            queryForNotes.subject="All"
+        }
+        if(!req.query.semester){
+            queryForNotes.semester="All"
+        }
+        if(!req.query.branch){
+            queryForNotes.branch="All"
+        }
+        // time name
+        let criteria=""
+        let mode="" 
+        if(!req.query.criteria || req.query.criteria=='time'){
+            criteria="time"
+        }else {
+            criteria="name"
+        }
+
+        let sortFun=()=>{}
+
+        if(!req.query.mode || req.query.mode==='-1'){
+            //-1
+            mode="-1"
+            // console.log("-1")
+            sortFun=(a,b)=>{
+                if(a[criteria] < b[criteria])
+                    return 1    // change
+                return -1   // no change
+            }
+        }else{
+            //1
+            mode="1"
+            // console.log("1")
+            sortFun=(a,b)=>{
+                if(a[criteria] > b[criteria])
+                    return 1    // change
+                return -1   // no change
+            }
+        }
+        // to sort a page
+        notesToSend.sort(sortFun)
+        res.render('teacherNotes.hbs',{
+            notes:notesToSend,
+            isTeacher:(req.student===undefined),
+            currentFilter:queryForNotes,
+            filterSubjects:filterSubjects,
+            sortBy:{
+                criteria:criteria,
+                mode:mode
+            },
+            reqRange:reqRange,
+            activatePage:req.query.skip // page no
+        })
+    }catch(err){
+        console.log('EEEEEEERRRRRRRRROOOOOOOOOOORRRRRRR')
+        console.log(error)
+        res.status(500).send()
+    }
+})
+router.get('/studentNotes', auth, async (req, res) => {             
+    if(req.query.subject){
+        req.query.subject=req.query.subject.split("-").join(" ")
+    }
+    
+    const queryForNotes={}
+    for( let i in req.query){
+        if(["criteria","mode","skip","range"].includes(i)){ /////////////////////////////////////////------------------
+            continue
+        }
+        queryForNotes[i]=req.query[i]
+    }
+    if(!req.query.skip){        //////////--------
+        req.query.skip="1"
+    }
+    if(!req.query.range){
+        req.query.range="1to5"
+    }
+    try{
+        await req.student.populate({
+            path:'studentNotesCount',
+            match:queryForNotes
+        }).execPopulate()
+        const totalNumberOfNotes=req.student.studentNotesCount
+        const totalNumberOfPages=Math.ceil(totalNumberOfNotes/3)
+        const reqRangeDemo=[parseInt(req.query.range.split('to')[0]), parseInt(req.query.range.split('to')[1]) ]
+        const reqRange=[]
+        for(let i=reqRangeDemo[0];i<=reqRangeDemo[1];i++){
+            reqRange.push(i)
+            if(i>=totalNumberOfPages)
+                break;
+        }
+
+        await req.student.populate({      
+                path: 'studentNotes',
+                select:'name subject semester uploaded_by createdAt updatedAt',
+                match:queryForNotes,
+                options: {
+                    limit:3,  
+                    skip:(parseInt(req.query.skip)-1)*3,
+                    sort:{
+                        createdAt:-1    // to extract information by sorting
+                    }
+                }
+            }).execPopulate()
+        if(!req.student.studentNotes){
+            return res.status(404).send()
+        }
+
+        const query={}
+        if(req.query.semester){
+            query.semester=req.query.semester
+        }
+        if(req.query.branch){
+            query.branch=req.query.branch
+        }
+
+        const allSubjects=await Notes.find(query,'subject') 
+
+        
+        const notesToSend=[]       
+        const filterSubjects=[]      
+
+        allSubjects.forEach((item)=>{
+            if(!filterSubjects.includes(item.subject)){
+                filterSubjects.push(item.subject.split(" ").join("-"))//////
+            }
+        })
+
+        for(let i=0;i<req.student.studentNotes.length;i++){
+            let oneNote=req.student.studentNotes[i]
+            const teacher=await Teacher.findById({_id:oneNote.uploaded_by},'name')
+            notesToSend.push({
+                name:oneNote.name,
+                semester:oneNote.semester,
+                subject:oneNote.subject,
+                time:moment(oneNote.createdAt).format('DD:MM:YYYY'),    
+                teacherName:teacher.name,
+                notesId:oneNote._id
+            })
+        }
+
+        if(!req.query.subject){
+            queryForNotes.subject="All"
+        }
+        if(!req.query.semester){
+            queryForNotes.semester="All"
+        }
+        if(!req.query.branch){
+            queryForNotes.branch="All"
+        }
+        // time name
+        let criteria=""
+        let mode="" 
+        if(!req.query.criteria || req.query.criteria=='time'){
+            criteria="time"
+        }else {
+            criteria="name"
+        }
+
+        let sortFun=()=>{}
+
+        if(!req.query.mode || req.query.mode==='-1'){
+            //-1
+            mode="-1"
+            // console.log("-1")
+            sortFun=(a,b)=>{
+                if(a[criteria] < b[criteria])
+                    return 1    // change
+                return -1   // no change
+            }
+        }else{
+            //1
+            mode="1"
+            // console.log("1")
+            sortFun=(a,b)=>{
+                if(a[criteria] > b[criteria])
+                    return 1    // change
+                return -1   // no change
+            }
+        }
+        // to sort a page
+        notesToSend.sort(sortFun)
+        res.render('studentNotes.hbs',{
+            notes:notesToSend,
+            isTeacher:(req.student===undefined),
+            currentFilter:queryForNotes,
+            filterSubjects:filterSubjects,
+            sortBy:{
+                criteria:criteria,
+                mode:mode
+            },
+            reqRange:reqRange,
+            activatePage:req.query.skip // page no
+        })
+    }catch(err){
+        console.log('EEEEEEERRRRRRRRROOOOOOOOOOORRRRRRR')
+        console.log(error)
+        res.status(500).send()
+    }
+})
+// new get all notes logic
+router.get('/allNotesPage',auth,async (req,res)=>{
+
+    if(req.query.subject){
+        req.query.subject=req.query.subject.split("-").join(" ")
+    }
+
+    const queryForNotes={}
+    for( let i in req.query){
+        if(["criteria","mode","skip","range"].includes(i)){ 
+            continue
+        }
+        queryForNotes[i]=req.query[i]
+    }
+    if(!req.query.skip){
         req.query.skip="1"
     }
     if(!req.query.range){
@@ -179,7 +378,9 @@ router.get('/allNotesPage',auth,async (req,res)=>{
                                         createdAt:-1    // to extract information by sorting
                                     }
                                 })
-
+        if(!notes){
+            return res.status(404).send()
+        }
         const query={}
         if(req.query.semester){
             query.semester=req.query.semester
@@ -190,15 +391,13 @@ router.get('/allNotesPage',auth,async (req,res)=>{
 
         const allSubjects=await Notes.find(query,'subject') 
 
-        if(!notes){
-            return res.status(404).send()
-        }
+        
         const notesToSend=[]       
         const filterSubjects=[]      
 
         allSubjects.forEach((item)=>{
             if(!filterSubjects.includes(item.subject)){
-                filterSubjects.push(item.subject)
+                filterSubjects.push(item.subject.split(" ").join("-"))//////
             }
         })
 
@@ -321,3 +520,4 @@ router.get('/addNotes', (req,res)=>{
 })
 
 module.exports= router
+

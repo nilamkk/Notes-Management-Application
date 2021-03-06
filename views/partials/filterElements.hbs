@@ -1,42 +1,59 @@
-    <label for="filter-list-subject">Subject:</label>
-    <select name="subject" id="filter-list-subject">
-        <option value="">Select subject</option>
-        <option value="All">All</option>
-        {{#each filterSubjects}}
-        <option value={{this}}>{{this}}</option>
-        {{/each}}
-    </select>
+<div class="filter-container">
+    <div class="filters-options-container">
 
-    <label for="filter-list-branch">Branch:</label>
-    <select name="branch" id="filter-list-branch">
-        <option value="">Select branch</option>
-        <option value="All">All</option>
-        <option value="CSE">CSE</option>
-        <option value="ECE">ECE</option>
-        <option value="EIE">EIE</option>
-        <option value="EE">EE</option>
-        <option value="CE">CE</option>
-        <option value="ME">ME</option>
-    </select>
+        <p>
+            <label for="filter-list-subject">Subject:</label>
+            <select name="subject" id="filter-list-subject">
+                <option value="">Select subject</option>
+                <option value="All">All</option>
+                {{#each filterSubjects}}
+                <option value={{this}}>{{this}}</option>
+                {{/each}}
+            </select>
+        </p>
 
-    <label for="filter-list-semester">Semester:</label>
-    <select name="semester" id="filter-list-semester">
-        <option value="">Select semester</option>
-        <option value="All">All</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>       
-    </select>
+        <p>
+            <label for="filter-list-branch">Branch:</label>
+            <select name="branch" id="filter-list-branch">
+                <option value="">Select branch</option>
+                <option value="All">All</option>
+                <option value="CSE">CSE</option>
+                <option value="ECE">ECE</option>
+                <option value="EIE">EIE</option>
+                <option value="EE">EE</option>
+                <option value="CE">CE</option>
+                <option value="ME">ME</option>
+            </select>
+        </p>
 
-    <button id="find-notes-button">Find notes</button>
+        <p>
+            <label for="filter-list-semester">Semester:</label>
+            <select name="semester" id="filter-list-semester">
+                <option value="">Select semester</option>
+                <option value="All">All</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>       
+            </select>
+        </p>
+
+        <button id="find-notes-button">Find notes</button>
+    </div>
+    
+    
 
     <div id="filters-applied-container">
         <p>Selected subject: <span id="selected-subject">{{currentFilter.subject}}</span></p>
         <p>Selected branch: <span id="selected-branch">{{currentFilter.branch}}</span></p>
         <p>Selected semester: <span id="selected-semester">{{currentFilter.semester}}</span></p>
     </div>
+
+</div>
+   
+   
+    

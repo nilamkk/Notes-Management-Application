@@ -1,7 +1,10 @@
     <div class="page-numbers-container">
-        {{#each reqRange}}
-            <span class="page-numbers" onclick="changePageFun(this)">{{this}}</span> <br>
-        {{/each}}
+        <p>
+            {{#each reqRange}}
+                <span class="page-numbers" onclick="changePageFun(this)">{{this}}</span>
+            {{/each}}
+        </p>
+        
         <hr>
         <p id="current-page"></p>
     </div>

@@ -1,17 +1,17 @@
 <div class="links-to-surf">
-    <ul>
+    <ul class="links-to-surf-ul">
         
         {{#if isTeacher}}
-            <li><a href="#">My profile</a></li>
-            <li><a href="/teachers/logout">Log out Teach</a></li>
-            <li><a href="/allNotesPage">All notes Teach</a></li>
-            <li><a href="/addNotes">Add new notes</a></li>
-            <li><a href="/teacherNotes">My Notes Teach</a></li>        
+            <li><a href="/teachers/me">My Profile</a></li>
+            <li><a href="/teachers/logout">Log Out</a></li>
+            <li><a href="/allNotesPage">All Notes</a></li>
+            <li><a href="/addNotes">Add New Notes</a></li>
+            <li><a href="/teacherNotes">My Notes</a></li>        
         {{else}}
-            <li><a href="#">My profile Std</a></li>
-            <li><a href="/students/logout">Log out Std</a></li>
-            <li><a href="/allNotesPage">All notes Std</a></li>
-            <li><a href="/studentNotes">My Notes Std</a></li>         
+            <li><a href="/students/me">My Profile</a></li>
+            <li><a href="/students/logout">Log Out</a></li>
+            <li><a href="/allNotesPage">All Notes</a></li>
+            <li><a href="/studentNotes">My Notes</a></li>         
         {{/if}}
     </ul>
 </div>

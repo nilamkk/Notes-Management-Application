@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0 px;
+            padding: 0 px ;
+        }
+        .background-container{
+            background-color: #eef;
+            height: 100vh;
+            width: 100%;
+            padding: 20px;
+        }
+        .information-container{
+            margin-top: 50px;
+            width: fit-content;
+            margin: 80px auto 0px;
+            border-radius: 5px;
+            background-color: #ffb88c;
+            padding: 20px;
+            padding-left: 10em;
+            padding-right: 10em ;
+
+        }
+    </style>
+    <link rel="stylesheet" href="/CSS/navElements.css">
+    <link rel="stylesheet" href="/CSS/signup.css">
+    <link rel="stylesheet" href="/CSS/renderEl.css">
+</head>
+<body>
+    {{>mainHeader}}
+    {{>navElements}}
+
+    <div class="background-container">
+        <div class="information-container">
+            <h3>{{name}}</h3>
+            <p>from NIT Silchar</p>
+            <p> <strong>Branch:</strong>  {{department}}</p>
+            <p><strong>Email:</strong>  {{email}}</p>
+        </div>
+    </div>
+
+</body>
+</html>

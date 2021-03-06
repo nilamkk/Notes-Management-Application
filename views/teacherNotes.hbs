@@ -3,33 +3,68 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/CSS/navElements.css">
         <link rel="stylesheet" href="/CSS/signup.css">
         <link rel="stylesheet" href="/CSS/renderEl.css">
         <title>Student Home</title>
+
+        <style>
+            .main-content-container{
+                display: flex;
+            }
+
+            .notes-list-container{
+                width: 75%;
+            }
+            .filter-container{
+                width: 25%;
+                margin-left: 10px;
+            }
+            .page-numbers-container{
+                text-align: center;
+            }
+            .page-numbers-container span{
+                margin:15px;
+                display: inline-block;
+                width: 20px;
+            }
+            .page-numbers-container span:hover{
+                background-color: #ccc;
+                cursor: pointer;
+                border-radius: 50%; 
+            }
+
+        </style>
+
     </head>
     <body>
         {{>mainHeader}}
         {{>navElements}}
 
-        {{>filterElements}}
+        <div class="main-content-container">
+            {{>filterElements}}
 
-        {{>notesListheader}}
+            <div class="notes-list-container">
+                {{>notesListheader}}
+            {{#each notes}}
+                <div class="notes-card">
+                    <span>{{this.name}}</span>
+                    <span>{{this.semester}}</span>
+                    <span>{{this.subject}}</span>
+                    <span>{{this.time}}</span>
+                    <span>{{this.teacherName}}</span>
+                    <a href="/notes/{{this.notesId}}" title="notes download" target="_blank">Download</a>
+                    <button onclick="deleteHandler(this,'{{this.notesId}}')" >Delete</button>
+                </div>        
+            {{/each}}
+        </div>
 
-        {{#each notes}}
-            <div class="notes-card">
-                <span>{{this.name}}</span>
-                <span>{{this.semester}}</span>
-                <span>{{this.subject}}</span>
-                <span>{{this.time}}</span>
-                <span>{{this.teacherName}}</span>
-                <a href="/notes/{{this.notesId}}" title="notes download" target="_blank">Download</a>
-                <button onclick="deleteHandler(this,'{{this.notesId}}')" >Delete</button>
-            </div>        
-        {{/each}}
+        </div>
 
         {{>pageNumbers}}
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="/clientJS/notes/allNotesPage.js"></script>
         <script>
             const deleteHandler=async (e,notesId)=>{
                 e.setAttribute('disabled','disabled')
