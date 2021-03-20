@@ -58,7 +58,7 @@ router.post('/teachers/signup', async (req, res) => {
         res
             .status(201)
             .cookie("auth_token",token)
-            .redirect('/teacher/home')
+            .redirect('/teacherNotes')
     } catch (e) {                                   // e.errors.email.message
         // const errorElements=Object.keys(e.errors)
         // const oneEl=errorElements[0]

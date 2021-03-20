@@ -174,6 +174,7 @@ router.get('/teacherNotes',auth,async (req,res)=>{
         notesToSend.sort(sortFun)
         res.render('teacherNotes.hbs',{
             notes:notesToSend,
+            isEmpty:(notesToSend.length===0)?true:false,
             isTeacher:(req.student===undefined),
             currentFilter:queryForNotes,
             filterSubjects:filterSubjects,
@@ -315,6 +316,7 @@ router.get('/studentNotes', auth, async (req, res) => {
         notesToSend.sort(sortFun)
         res.render('studentNotes.hbs',{
             notes:notesToSend,
+            isEmpty:(notesToSend.length===0)?true:false,
             isTeacher:(req.student===undefined),
             currentFilter:queryForNotes,
             filterSubjects:filterSubjects,
@@ -462,6 +464,7 @@ router.get('/allNotesPage',auth,async (req,res)=>{
         
         res.render('allNotesPage.hbs',{
             notes:notesToSend,
+            isEmpty:(notesToSend.length===0)?true:false,////////////////////////
             isTeacher:(req.student===undefined),
             currentFilter:queryForNotes,
             filterSubjects:filterSubjects,

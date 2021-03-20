@@ -66,7 +66,7 @@ uploadedOnSpan.addEventListener('click',()=>{
 })
 findNotesButton.addEventListener('click',()=>{
     const queryString=createQueryString()
-
+    console.log("****************")
     location.search=queryString
 })
 const createQueryString=()=>{

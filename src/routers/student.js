@@ -8,7 +8,6 @@ const router = new express.Router()
 // Middelwares
 const  auth =require('../middleware/auth')
 
-
 //  Student signup  -----verifiedd
 router.post('/students/signup', async (req, res) => {
     
@@ -32,7 +31,6 @@ router.post('/students/signup', async (req, res) => {
         })
     }
 })
-
 // login----------verified
 router.post('/students/login', async (req, res) => {
     try {
@@ -49,7 +47,6 @@ router.post('/students/login', async (req, res) => {
         })
     }
 })
-
 // logout       --verified                                                                          left to do
 router.get('/students/logout', auth, async (req, res) => {                                         
     try {
@@ -73,7 +70,8 @@ router.get('/students/me', auth, async (req, res) => {
         section:req.student.section,
         branch:req.student.branch,
         semester:req.student.semester,
-        email:req.student.email
+        email:req.student.email,
+        scholar_no:req.student.scholar_no
     }
     res.render('profileStudent.hbs',studentInfo)
 })
@@ -105,7 +103,6 @@ router.delete('/students/me', auth, async (req, res) => {
         res.status(500).send()
     }
 })
-
 
 
 module.exports= router

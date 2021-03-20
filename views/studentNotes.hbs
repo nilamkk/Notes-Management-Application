@@ -9,10 +9,13 @@
         <title>Student Home</title>
 
         <style>
+            body{
+                min-width: 810px;
+            }
             .main-content-container{
+                margin: 10px;
                 display: flex;
             }
-
             .notes-list-container{
                 width: 75%;
             }
@@ -33,7 +36,127 @@
                 cursor: pointer;
                 border-radius: 50%; 
             }
+        {{!-- filters select --}}
+        .filters-options-container{
+            width: 80%;
+            margin:auto;
+        }
+        .filters-options-container p select{
+            width: 90%;
+            padding: 8px;
+            font-size: 1em;
+            outline: none;
+            border: none;
+            border-bottom: 1px solid tomato;
+        }
+        .filters-options-container button{
+            padding: 8px;
+            font-size: 1em;
+            width: 60%;
+            outline: none;
+            border: none;
+            background-color: tomato;
+            cursor: pointer;
+        }
+        .filters-options-container button:hover{
+            color: thistle;
+        }
+        .filters-options-container button:focus{
+            background-color: rgb(202, 125, 111);
+        }
+        #filters-applied-container p{
+            font-size: 1em;
+            padding: 8px;
+        }
+        #filters-applied-container p{
+            width: 100%;
+        }
+        #filters-applied-container{
+            width: 80%;
+            margin:auto;
+        }
 
+        {{!-- table styles below --}}
+        .main-table{
+            border-collapse: collapse;
+            min-width: 400px;
+            border-radius: 5px 5px 0 0;
+            width: 100%;
+            font-size: 1em;
+            overflow: hidden;
+        }
+        {{!-- tr:hover{
+            background-color:rgb(100,195,185) ;
+        } --}}
+
+        .main-table thead tr{
+            background-color: aqua;
+            text-align: left;
+            font-weight: bold;
+            
+        }
+        th{
+            padding: 10px;
+        }
+        td{
+            padding: 10px;
+        }
+        .main-table tbody tr td{
+            border-bottom:1px solid cadetblue;
+            width: 120px;
+        }
+        {{!-- .main-table tbody tr td:first-child{
+            border-left: 1px solid cadetblue;
+        }
+        .main-table tbody tr td:last-child{
+            border-right: 1px solid cadetblue;
+        } --}}
+        {{!-- delete button --}}
+        .delete-button{
+            border:none;
+            background-color: white;
+            outline: none;
+            font-weight: bold;
+        }
+        .delete-button:hover{
+            color: red;
+        }
+        .delete-button:focus{
+            background-color: red;
+            color: seashell;
+        }
+
+        {{!-- download link --}}
+        .download-link{
+            text-decoration: none;
+            color: tomato;
+        }
+        .download-link:active{
+            background-color: tomato;
+            color: black;
+        }
+        .download-link:hover{
+            color: black;
+        }
+        {{!-- filter-table-container-style  --}}
+        .main-content-container{
+            {{!-- background-color: yellow; --}}
+        }
+        .filter-container{
+            border: 1px solid #ccc;
+            margin: 5px 0 10px 10px;
+            min-width: 227px;
+            {{!-- background-color: green; --}}
+        }
+        .notes-list-container{
+            {{!-- border: 1px solid #ccc; --}}
+            margin: 5px 0 10px 10px;
+            {{!-- background-color: brown; --}}
+        }
+        .no-notes-para{
+            text-align: center;
+            color: gray;
+        }
         </style>
     </head>
     <body>
@@ -44,8 +167,31 @@
             {{>filterElements}}
 
             <div class="notes-list-container">
-                {{>notesListheader}}
-                {{#each notes}}
+
+                <table class="main-table">
+                    <thead>
+                        {{>notesListHeaderAll}}
+                    </thead>
+                    <tbody>  
+                        {{#each notes}}
+                            <tr>
+                                <td>{{this.name}}</td>
+                                <td>{{this.semester}}</td>
+                                <td>{{this.subject}}</td>
+                                <td>{{this.time}}</td>
+                                <td>{{this.teacherName}}</td>
+                                <td><a class="download-link" href="/notes/{{this.notesId}}" title="notes download" target="_blank">Download</a></td>
+                                {{!-- <td><button class="delete-button" onclick="deleteHandler(this,'{{this.notesId}}')" >Delete</button></td> --}}
+                            </tr>       
+                        {{/each}}
+                    </tbody>
+                </table>       
+                {{#if isEmpty}}
+                    <p class="no-notes-para">No Notes Found</p>
+                {{/if}}
+                {{!-- create table above --}}
+
+                {{!-- {{#each notes}}
                     <div class="notes-card">
                         <span>{{this.name}}</span>
                         <span>{{this.semester}}</span>
@@ -54,7 +200,7 @@
                         <span>{{this.teacherName}}</span>
                         <a href="/notes/{{this.notesId}}" title="notes download" target="_blank">Download</a>
                     </div>        
-                {{/each}}
+                {{/each}} --}}
             </div>
 
         </div>
