@@ -6,7 +6,7 @@ const auth = async (req, res, next) => {
     try {
         // const token = req.header('Authorization').replace('Bearer ', '')            //// handle this
         const token=req.cookies.auth_token
-        const decoded = jwt.verify(token, "SHRADHAisLOVE")  //process.env.JWT_SECRET                   
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)                     
         const student = await Student.findOne({ _id: decoded._id, 'tokens.token': token })
         const teacher = await Teacher.findOne({ _id: decoded._id, 'tokens.token': token })
         // console.log("A1")
@@ -27,7 +27,5 @@ const auth = async (req, res, next) => {
         res.status(400).render('notesHome.hbs')
     }
 }
-
-
 
 module.exports = auth

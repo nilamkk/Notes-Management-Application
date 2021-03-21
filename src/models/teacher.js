@@ -74,7 +74,7 @@ teacherSchema.virtual('teacherNotesCount', {
 teacherSchema.methods.generateAuthToken = async function () {
     const teacher = this
     // console.log("GAT-line 55")
-    const token = jwt.sign({ _id: teacher._id.toString() }, "SHRADHAisLOVE")    //process.env.JWT_SECRET
+    const token = jwt.sign({ _id: teacher._id.toString() }, process.env.JWT_SECRET)   
     // console.log("GAT-line 57")
     teacher.tokens = teacher.tokens.concat({ token })
     // console.log("GAT-line 59")
@@ -124,19 +124,6 @@ teacherSchema.pre('save', async function (next) {
 const Teacher=mongoose.model('Teacher',teacherSchema)
 
 module.exports=Teacher
-
-// const tea=new Teacher(
-//     {
-//         name:"CAT",
-//         email:"cat@gmail.com",
-//         password:"999999999999",
-//         department:"CSE"
-// })
-// tea.save().then((e)=>{
-//     console.log('SAVED teacher')
-// }).catch((err)=>{
-
-// })
 
 
 

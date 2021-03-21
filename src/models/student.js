@@ -103,8 +103,7 @@ studentSchema.virtual('studentNotesCount', {
 
 studentSchema.methods.generateAuthToken = async function () {
     const student = this
-    const token = jwt.sign({ _id: student._id.toString() }, "SHRADHAisLOVE")   // process.env.JWT_SECRET
-
+    const token = jwt.sign({ _id: student._id.toString() }, process.env.JWT_SECRET)  
     student.tokens = student.tokens.concat({ token })
     await student.save()
 
@@ -154,24 +153,5 @@ studentSchema.pre('save', async function (next) {
 const Student=mongoose.model('Student',studentSchema)
 
 module.exports=Student
-
-// const me=new Student(
-//     {
-//         name:"Kuldip",
-//         email:"kuldip@gmail.com",
-//         password:"999999999999",
-//         scholar_no:1815128,
-//         branch: "CSE",
-//         section:"B",
-//         semester:5
-    
-
-// })
-// me.save().then((e)=>{
-//     console.log('SAVED student')
-// }).catch((err)=>{
-
-// })
-
 
 

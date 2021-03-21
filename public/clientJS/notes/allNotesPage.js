@@ -110,7 +110,9 @@ const createQueryString=()=>{
 }
 
 const findCurrentRange=()=>{
+    // const rangeStart=parseInt(activatePage)
     const rangeStart=parseInt(pageNumberContainer.childNodes[1].textContent)
+    console.log("*****",rangeStart,"*********")
     return [rangeStart,rangeStart+4].join("to")
 }
 // findCurrentRange()
@@ -122,11 +124,16 @@ const changePageFun=(e)=>{
         query+=`&`
     }
     // range skip
-    query+=`range=${findCurrentRange()}&`
+    let currentRange=findCurrentRange()
+    query+=`range=${currentRange}&`
     query+=`skip=${activatePage}`
 
     const reqPage=e.textContent
     query=query.replace(`skip=${activatePage}`,`skip=${reqPage}`)
+    if(parseInt(reqPage)==5 || (parseInt(reqPage)>5 && (parseInt(reqPage)-5)%4==0)){
+        let reqRange= [parseInt(reqPage),parseInt(reqPage)+4].join("to")
+        query=query.replace(`range=${currentRange}`,`range=${reqRange}`)
+    }
     // console.log(reqPage)
     // console.log(query)
     location.search=query

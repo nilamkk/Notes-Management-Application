@@ -4,16 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add Notes</title>
+    <link rel="shortcut icon" href="/pics/pen-alt-solid.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     <link rel="stylesheet" href="/CSS/addNotes.css">
-    <link rel="stylesheet" href="/CSS/signup.css">
-    <link rel="stylesheet" href="/CSS/navElements.css">    
+    <link rel="stylesheet" href="/CSS/basicStyles.css">
+    <link rel="stylesheet" href="/CSS/footer.css">
+    <link rel="stylesheet" href="/CSS/navElements.css">  
+    <style>
+        .notes-added-msg{
+            color: rgb(114, 108, 108);
+            text-align: center;
+            font-size: 1em;
+            font-weight: 500;
+        }
+    </style>  
 </head>
 <body>
     {{>mainHeader}}
     {{>navElements}}
     <div class="form-container-file">
         <form id="notes-input-form" action="/addNotes" method="POST" enctype="multipart/form-data">
+            <p class="notes-added-msg">{{message}}</p>
             <div class="input-div">
                 <p>Name:</p>
                 <input type="text" placeholder="enter name of the notes" name="name" >
@@ -40,6 +52,9 @@
         </form>
     </div>
     
+    {{>footer}}
+
+
     <script src="/clientJS/teacher/addNotes.js"></script>
 </body>
 </html>

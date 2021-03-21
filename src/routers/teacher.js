@@ -7,10 +7,8 @@ const router = new express.Router()
 
 // Middelwares
 const auth =require('../middleware/auth')
-const { count } = require('../models/teacher')
+// const { count } = require('../models/teacher')   //------------------------------
 
-// // teacher home
-// router.get('/teacher/home',(req,res)=>{
 // login    
 router.post('/teachers/login', async (req, res) => {
     try {
@@ -28,18 +26,17 @@ router.post('/teachers/login', async (req, res) => {
         })
     }
 })
-
 // send teacher by id
-router.get('/findTeacher/:id',async(req,res)=>{
-    const _id=req.params.id
-    try{
-        const teacher=await Teacher.findById({_id})
-        res.send(teacher.name)
-    }catch(err){
-        res.status(400).send(err)
-    }
+// router.get('/findTeacher/:id',async(req,res)=>{         ////////////------------------------------------
+//     const _id=req.params.id
+//     try{
+//         const teacher=await Teacher.findById({_id})
+//         res.send(teacher.name)
+//     }catch(err){
+//         res.status(400).send(err)
+//     }
     
-})
+// })
 
 //  Teacher signup  
 router.post('/teachers/signup', async (req, res) => {
@@ -60,16 +57,14 @@ router.post('/teachers/signup', async (req, res) => {
             .cookie("auth_token",token)
             .redirect('/teacherNotes')
     } catch (e) {                                   // e.errors.email.message
-        // const errorElements=Object.keys(e.errors)
-        // const oneEl=errorElements[0]
-        
-        // res.status(400).render('signupTeacher.hbs',{
-        //     error:`${oneEl} is invalid`
-        // })
-        res.send("ERROR")
+        const errorElements=Object.keys(e.errors)
+        const oneEl=errorElements[0]
+
+        res.status(400).render('signupTeacher.hbs',{
+            error:`${oneEl.charAt(0).toUpperCase() + oneEl.slice(1)} is invalid`
+        })  
     }
 })
-
 // logout      
 router.get('/teachers/logout', auth , async (req, res) => {
     try {
@@ -82,7 +77,6 @@ router.get('/teachers/logout', auth , async (req, res) => {
         res.status(500).send()
     }
 })
-
 //get account       
 router.get('/teachers/me', auth, async (req, res) => {
     
@@ -95,35 +89,33 @@ router.get('/teachers/me', auth, async (req, res) => {
     
     res.render('profileTeacher.hbs',teacherInfo)
 })
-
 // update 
-router.patch('/teachers/me', auth, async (req, res) => {
-    const updates = Object.keys(req.body)
-    const allowedUpdates = ['name', 'email', 'password']                                        /////////////---------------------
-    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+// router.patch('/teachers/me', auth, async (req, res) => {
+//     const updates = Object.keys(req.body)
+//     const allowedUpdates = ['name', 'email', 'password']                                        /////////////---------------------
+//     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
-    if (!isValidOperation) {
-        return res.status(400).send({ error: 'Invalid updates!' })
-    }
+//     if (!isValidOperation) {
+//         return res.status(400).send({ error: 'Invalid updates!' })
+//     }
 
-    try {
-        updates.forEach((update) => req.teacher[update] = req.body[update])
-        await req.teacher.save()
-        res.send(req.teacher)
-    } catch (e) {
-        res.status(400).send(e)
-    }
-})
-
+//     try {
+//         updates.forEach((update) => req.teacher[update] = req.body[update])
+//         await req.teacher.save()
+//         res.send(req.teacher)
+//     } catch (e) {
+//         res.status(400).send(e)
+//     }
+// })
 // delete account           -------verified
-router.delete('/teachers/me', auth, async (req, res) => {
-    try {
-        await req.teacher.remove()
-        res.send(req.teacher)
-    } catch (e) {
-        res.status(500).send()
-    }
-})
+// router.delete('/teachers/me', auth, async (req, res) => {
+//     try {
+//         await req.teacher.remove()
+//         res.send(req.teacher)
+//     } catch (e) {
+//         res.status(500).send()
+//     }
+// })
 
 
 

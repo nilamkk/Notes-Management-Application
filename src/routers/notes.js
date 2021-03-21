@@ -2,7 +2,7 @@
 const Notes=require('../models/notes')
 const Teacher=require('../models/teacher')
 // Express Stuff
-const express=require('express')
+const express= require('express')
 const router = new express.Router()
 const multer = require('multer')
 const moment=require('moment')
@@ -74,7 +74,7 @@ router.get('/teacherNotes',auth,async (req,res)=>{
             match:queryForNotes
         }).execPopulate()
         const totalNumberOfNotes=req.teacher.teacherNotesCount
-        const totalNumberOfPages=Math.ceil(totalNumberOfNotes/3)
+        const totalNumberOfPages=Math.ceil(totalNumberOfNotes/10)
         const reqRangeDemo=[parseInt(req.query.range.split('to')[0]), parseInt(req.query.range.split('to')[1]) ]
         const reqRange=[]
         for(let i=reqRangeDemo[0];i<=reqRangeDemo[1];i++){
@@ -88,8 +88,8 @@ router.get('/teacherNotes',auth,async (req,res)=>{
                 select:'name subject semester uploaded_by createdAt updatedAt',
                 match:queryForNotes,
                 options: {
-                    limit:3,  
-                    skip:(parseInt(req.query.skip)-1)*3,
+                    limit:10,  
+                    skip:(parseInt(req.query.skip)-1)*10,
                     sort:{
                         createdAt:-1    // to extract information by sorting
                     }
@@ -215,7 +215,7 @@ router.get('/studentNotes', auth, async (req, res) => {
             match:queryForNotes
         }).execPopulate()
         const totalNumberOfNotes=req.student.studentNotesCount
-        const totalNumberOfPages=Math.ceil(totalNumberOfNotes/3)
+        const totalNumberOfPages=Math.ceil(totalNumberOfNotes/10)
         const reqRangeDemo=[parseInt(req.query.range.split('to')[0]), parseInt(req.query.range.split('to')[1]) ]
         const reqRange=[]
         for(let i=reqRangeDemo[0];i<=reqRangeDemo[1];i++){
@@ -229,8 +229,8 @@ router.get('/studentNotes', auth, async (req, res) => {
                 select:'name subject semester uploaded_by createdAt updatedAt',
                 match:queryForNotes,
                 options: {
-                    limit:3,  
-                    skip:(parseInt(req.query.skip)-1)*3,
+                    limit:10,  
+                    skip:(parseInt(req.query.skip)-1)*10,
                     sort:{
                         createdAt:-1    // to extract information by sorting
                     }
@@ -355,27 +355,20 @@ router.get('/allNotesPage',auth,async (req,res)=>{
     }
 
     try{
-        /////------------current
         const totalNumberOfNotes=await Notes.countDocuments(queryForNotes)
-        // console.log(totalNumberOfNotes)
-        const totalNumberOfPages=Math.ceil(totalNumberOfNotes/3)        // set limit here limit=3 now
+        const totalNumberOfPages=Math.ceil(totalNumberOfNotes/10)        // set limit here limit=3 now
         const reqRangeDemo=[parseInt(req.query.range.split('to')[0]), parseInt(req.query.range.split('to')[1]) ]
         const reqRange= []
         for(let i=reqRangeDemo[0];i<=reqRangeDemo[1];i++){
             reqRange.push(i)
-            // console.log(i)
             if(i>=totalNumberOfPages)
                 break;
         } 
-        // req.query.skip
-        // Math.ceil()
-        /////------------current
-
         // const notes=await Notes.find(queryForNotes,'_id name subject semester uploaded_by createdAt updatedAt')
         const notes=await Notes.find(queryForNotes,
                                 ['_id', 'name', 'subject', 'semester', 'uploaded_by', 'createdAt', 'updatedAt'],
-                                {   skip:(parseInt(req.query.skip)-1)*3,   /////------------current             // set limit here limit=3 now
-                                    limit:3,                                                                     // set limit here limit=3 now
+                                {   skip:(parseInt(req.query.skip)-1)*10,   /////------------current             // set limit here limit=3 now
+                                    limit:10,                                                                     // set limit here limit=3 now
                                     sort:{
                                         createdAt:-1    // to extract information by sorting
                                     }
@@ -392,7 +385,6 @@ router.get('/allNotesPage',auth,async (req,res)=>{
         }
 
         const allSubjects=await Notes.find(query,'subject') 
-
         
         const notesToSend=[]       
         const filterSubjects=[]      
@@ -458,10 +450,6 @@ router.get('/allNotesPage',auth,async (req,res)=>{
         // to sort a page
         notesToSend.sort(sortFun)
 
-        // notesToSend.forEach((ee)=>{
-        //     console.log(ee.name," " ,ee.time)
-        // })
-        
         res.render('allNotesPage.hbs',{
             notes:notesToSend,
             isEmpty:(notesToSend.length===0)?true:false,////////////////////////
@@ -512,9 +500,8 @@ router.post('/addNotes',auth,upload.single('newNotes'),async (req,res)=>{
             message:'Notes added successfully'
         })
     } catch (e) {
-        res.status(400).send(e)
+        res.status(500).send(e)
     }
-
 })
 router.get('/addNotes', (req,res)=>{
     res.render('addNotes.hbs',{

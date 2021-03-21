@@ -56,19 +56,3 @@ const noteSchema= new mongoose.Schema({
 const notes= mongoose.model('Notes',noteSchema)
 
 module.exports=notes
-
-
-// try demo
-
-// const me=new Notes({
-    //         name:"OS-Theory",
-    //         subject:"OS",
-    //         semester:"5",
-    //         uploaded_by: new ObjectId("5f4d7029b6677b34741659d9"),
-    //         downloaded_by:[new ObjectId("5f4d7029b6677b34741659d8"),new ObjectId("5f4d7029b6677b34741659d8")]
-    // })
-//     me.save().then((e)=>{
-//         console.log('SAVED notes')
-//     }).catch((err)=>{
-    
-//     })

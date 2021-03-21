@@ -15,6 +15,7 @@ const Notes=require('./models/notes')
 // Paths
 const publicDir=path.join(__dirname,'../public')
 const partialPath=path.join(__dirname,'../views/partials')
+const port=process.env.PORT
 
 // Routers
 const studentRouter=require('./routers/student')
@@ -28,7 +29,7 @@ hbs.registerPartials(partialPath)
 
 // Middlewares
 app.use(express.json())
-app.use(cookieParser())
+app.use(cookieParser())                                 
 app.use(express.urlencoded({extended:false}))           // so that form data get binds to req.body  VIIPPPPPP for post req ie with data
 app.use(express.static(publicDir))
 
@@ -41,30 +42,23 @@ app.use(teacherRouter)
 app.get('/manageNotes/home',(req,res)=>{
     res.render('notesHome.hbs')
 })
-
 app.get('/signup/student/page',(req,res)=>{
     res.render('signupStudent.hbs')
 })
-
 app.get('/login/student/page',(req,res)=>{
     res.render('loginStudent.hbs')
 })
 app.get('/signup/teacher/page',(req,res)=>{
     res.render('signupTeacher.hbs')
 })
-
 app.get('/login/teacher/page',(req,res)=>{
     res.render('loginTeacher.hbs')
 })
-
-app.get('/errorPage',(req,res)=>{
-    res.render('errorPage.hbs')
-})
-
 app.get('/*',(req,res)=>{
     res.render('errorPage.hbs')
 })
 
-app.listen(3000,()=>                        ///////// PORT SETUP FOR PRODUCTION
-    console.log('Server is running')
+
+app.listen(port,()=>                        
+    console.log('Server is running on '+port)
 )
