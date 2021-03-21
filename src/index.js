@@ -39,7 +39,7 @@ app.use(teacherRouter)
 
 
 
-app.get('/manageNotes/home',(req,res)=>{
+app.get('/',(req,res)=>{        //////////////------------manageNotes/home
     res.render('notesHome.hbs')
 })
 app.get('/signup/student/page',(req,res)=>{

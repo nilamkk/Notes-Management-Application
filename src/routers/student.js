@@ -53,7 +53,7 @@ router.get('/students/logout', auth, async (req, res) => {
             return token.token !== req.token
         })
         await req.student.save()
-        res.redirect('/manageNotes/home')
+        res.redirect('/')
     } catch (e) {
         res.status(500).send()
     }
