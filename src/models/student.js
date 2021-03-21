@@ -46,7 +46,6 @@ const studentSchema=new mongoose.Schema({           ///// Sanitization left
             if(noStr!="17" && noStr!="18" && noStr!="19" && noStr!="20"){
                 throw new Error('Invalid Scholar No')
             }
-            
         }
     },
     branch:{                

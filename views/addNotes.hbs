@@ -28,23 +28,23 @@
             <p class="notes-added-msg">{{message}}</p>
             <div class="input-div">
                 <p>Name:</p>
-                <input type="text" placeholder="enter name of the notes" name="name" >
+                <input type="text" placeholder="enter name of the notes" name="name" autocomplete="off" required>
             </div>
             <div class="input-div">
                 <p>Subject:</p>
-                <input type="text" placeholder="enter subject" name="subject" >
+                <input type="text" placeholder="enter subject" name="subject" autocomplete="off" required>
             </div>
             <div class="input-div">
                 <p>Branch:</p>
-                <input type="text" placeholder="enter branch" name="branch" >
+                <input type="text" placeholder="enter branch eg:CSE" name="branch" autocomplete="off" required>
             </div>
             <div class="input-div">
                 <p>Semester:</p>
-                <input type="number" placeholder="enter semester" name="semester" >
+                <input type="number" placeholder="enter semester (1-8)" name="semester" autocomplete="off" required>
             </div>
             <div class="input-div ">
                 <p>File:</p>
-                <input type="file" name="newNotes" accept=".pdf,.ppt,.docx,.doc,.pptx,.txt, .xlsx ,.jpg , .png" >
+                <input type="file" name="newNotes" accept=".pdf,.ppt,.docx,.doc,.pptx,.txt, .xlsx ,.jpg , .png" required>
             </div>
             <div class="input-div ">
                 <input type="submit" value="Add">
